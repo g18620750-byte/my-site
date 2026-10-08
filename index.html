@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06111f">
+<meta name="description" content="راهنمای تعاملی Ocean Game Bot — آموزش بخش‌ها، قابلیت‌ها و دستورات">
+<title>Ocean Game Bot — Interactive Guide</title>
+<style>
+:root{--bg:#030914;--panel:rgba(7,18,32,.72);--line:rgba(110,190,255,.16);--text:#eaf7ff;--muted:#88a5bb;--cyan:#35d9ff;--green:#48ff9b;--pink:#ff55bc;--gold:#ffd45a;--red:#ff5d72;--purple:#a879ff;--shadow:0 18px 60px rgba(0,0,0,.38)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 20% 10%,#092544 0,transparent 32%),radial-gradient(circle at 80% 20%,#10203f 0,transparent 30%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(53,217,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(53,217,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
+#ocean{position:fixed;inset:0;z-index:-1;overflow:hidden}.orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.25;animation:float 12s ease-in-out infinite}.o1{width:260px;height:260px;background:#0bdcff;right:8%;top:18%}.o2{width:180px;height:180px;background:#8b4dff;left:8%;top:55%;animation-delay:-5s}@keyframes float{50%{transform:translate3d(0,-35px,0) scale(1.08)}}
+.wave{position:absolute;bottom:-80px;left:-5%;width:110%;height:180px;border-radius:48% 52% 0 0/70% 70% 0 0;background:rgba(25,150,220,.08);border-top:1px solid rgba(53,217,255,.18);animation:wave 8s linear infinite}.wave:nth-child(2){bottom:-115px;opacity:.55;animation-duration:12s;animation-direction:reverse}@keyframes wave{to{transform:translateX(-5%) rotate(.5deg)}}
+header{min-height:76vh;display:flex;align-items:center;justify-content:center;padding:70px 18px 50px;text-align:center}.hero{max-width:1050px;width:100%}
+.kicker{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(7,20,35,.58);padding:8px 14px;border-radius:999px;color:var(--cyan);box-shadow:0 0 35px rgba(53,217,255,.08);font-size:13px}
+h1{font-size:clamp(42px,9vw,92px);line-height:.95;margin:22px 0 16px;letter-spacing:-4px;background:linear-gradient(120deg,#fff,var(--cyan),#9e8cff,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}@keyframes shine{to{background-position:250% center}}
+.hero p{max-width:760px;margin:0 auto;color:var(--muted);font-size:18px;line-height:2}
+.live{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:28px 0}.live span{padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);font-size:13px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green);animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}
+.container{max-width:1250px;margin:auto;padding:0 18px 80px}.toolbar{position:sticky;top:12px;z-index:10;display:grid;grid-template-columns:1fr;gap:12px;padding:14px;border:1px solid var(--line);background:rgba(3,10,20,.82);backdrop-filter:blur(18px);border-radius:20px;box-shadow:var(--shadow);margin-bottom:26px}
+.search{width:100%;padding:14px 16px;border-radius:13px;border:1px solid var(--line);background:#071321;color:#fff;outline:none;font-size:15px}.search:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(53,217,255,.08)}
+.filters{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.filter{white-space:nowrap;border:1px solid var(--line);background:#081523;color:#a9c4d5;border-radius:10px;padding:9px 13px;cursor:pointer}.filter.active,.filter:hover{background:rgba(53,217,255,.12);color:#fff;border-color:rgba(53,217,255,.45)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 24px}.stat{border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:18px;box-shadow:var(--shadow)}.stat b{font-size:28px;display:block;margin-top:5px}.stat small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:14px}.feature-card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(9,25,43,.82),rgba(5,13,25,.78));border-radius:22px;padding:18px;min-height:245px;box-shadow:0 12px 40px rgba(0,0,0,.22);transition:.25s;position:relative;overflow:hidden}.feature-card:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:var(--cyan);filter:blur(60px);opacity:.05;left:-30px;bottom:-30px}.feature-card:hover{transform:translateY(-5px);border-color:rgba(53,217,255,.32);box-shadow:0 18px 55px rgba(0,0,0,.35)}.card-top{display:flex;justify-content:space-between;align-items:center}.icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:24px;background:#071a2a;border:1px solid var(--line)}.icon.green{box-shadow:inset 0 0 25px rgba(72,255,155,.08)}.icon.pink{box-shadow:inset 0 0 25px rgba(255,85,188,.08)}.icon.gold{box-shadow:inset 0 0 25px rgba(255,212,90,.08)}.icon.red{box-shadow:inset 0 0 25px rgba(255,93,114,.08)}.badge{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:6px 9px;border-radius:999px}h3{margin:15px 0 7px;font-size:19px}.feature-card p{margin:0 0 15px;color:#94aec0;font-size:13px;line-height:1.9;min-height:48px}.commands{display:flex;flex-wrap:wrap;gap:7px}.cmd{display:flex;align-items:center;gap:8px;border:1px solid rgba(53,217,255,.18);background:#06111d;color:#d9f6ff;border-radius:9px;padding:7px 9px;font:12px monospace;cursor:pointer;max-width:100%}.cmd span{opacity:.45}.cmd:hover{border-color:var(--cyan);color:#fff}
+.empty{display:none;text-align:center;padding:60px;color:var(--muted);border:1px dashed var(--line);border-radius:20px}
+footer{text-align:center;color:#638097;padding:20px;border-top:1px solid var(--line);line-height:2;font-size:12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#071a2a;border:1px solid rgba(53,217,255,.35);padding:12px 16px;border-radius:12px;box-shadow:var(--shadow);transition:.25s;z-index:99}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){header{min-height:70vh}h1{letter-spacing:-2px}.stats{grid-template-columns:repeat(2,1fr)}.feature-card{min-height:0}.hero p{font-size:15px}}
+</style>
+</head>
+<body>
+<div id="ocean"><div class="orb o1"></div><div class="orb o2"></div><div class="wave"></div><div class="wave"></div></div>
+
+<header>
+  <div class="hero">
+    <div class="kicker"><span class="dot"></span> OCEAN GAME • INTERACTIVE DOCUMENTATION</div>
+    <h1>OCEAN GAME<br>BOT GUIDE</h1>
+    <p>راهنمای زنده و تعاملی بخش‌های واقعی بات بازی Ocean Game؛ از اقتصاد، ترید و بانک تا بازی‌ها، روابط، ماینر، سهام و پنل کامل ادمین.</p>
+    <div class="live">
+      <span>⚡ <b id="liveTime">--:--:--</b> LIVE</span>
+      <span>🌊 53 بخش مستندشده</span>
+      <span>🧩 9 دسته</span>
+      <span>📱 Mobile Ready</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="toolbar">
+    <input id="search" class="search" placeholder="جستجو در بخش‌ها، توضیحات یا دستورها..." autocomplete="off">
+    <div class="filters"><button class="filter" data-filter="همه">همه</button><button class="filter" data-filter="اجتماعی">اجتماعی</button><button class="filter" data-filter="ادمین">ادمین</button><button class="filter" data-filter="اقتصاد">اقتصاد</button><button class="filter" data-filter="بازی">بازی</button><button class="filter" data-filter="عمومی">عمومی</button><button class="filter" data-filter="فروشگاه">فروشگاه</button><button class="filter" data-filter="مدیریت">مدیریت</button><button class="filter" data-filter="پیشرفت">پیشرفت</button><button class="filter" data-filter="گروهی">گروهی</button></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><small>بخش‌ها</small><b id="count">53</b></div>
+    <div class="stat"><small>دسته‌ها</small><b>9</b></div>
+    <div class="stat"><small>دستورات نمونه</small><b>103</b></div>
+    <div class="stat"><small>وضعیت</small><b style="color:var(--green)">ONLINE</b></div>
+  </div>
+
+  <div id="grid" class="grid">
+    <article class="feature-card" data-cat="عمومی" data-search="پروفایل و موجودی عمومی نمایش جیب، بانک، مجموع پول، لقب، سطح، همسر و تعداد فرزندان. منو موجودی پروفایل بالانس">
+      <div class="card-top"><div class="icon cyan">👤</div><span class="badge">عمومی</span></div>
+      <h3>پروفایل و موجودی</h3>
+      <p>نمایش جیب، بانک، مجموع پول، لقب، سطح، همسر و تعداد فرزندان.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="منو">منو<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="موجودی">موجودی<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="پروفایل">پروفایل<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="بالانس">بالانس<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="عمومی" data-search="رابطه و ازدواج عمومی سیستم رابطه با همسر، ازدواج با ریپلای، طلاق، خیانت و پاداش/کول‌داون. رابطه ازدواج طلاق خیانت">
+      <div class="card-top"><div class="icon cyan">💍</div><span class="badge">عمومی</span></div>
+      <h3>رابطه و ازدواج</h3>
+      <p>سیستم رابطه با همسر، ازدواج با ریپلای، طلاق، خیانت و پاداش/کول‌داون.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="رابطه">رابطه<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="ازدواج">ازدواج<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="طلاق">طلاق<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="خیانت">خیانت<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="عمومی" data-search="فرزندان عمومی ثبت و مدیریت فرزند، سن، مرحله زندگی، شهریه و حقوق روزانه. اسم بچه ... فرزندان">
+      <div class="card-top"><div class="icon cyan">👶</div><span class="badge">عمومی</span></div>
+      <h3>فرزندان</h3>
+      <p>ثبت و مدیریت فرزند، سن، مرحله زندگی، شهریه و حقوق روزانه.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="اسم بچه ...">اسم بچه ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="فرزندان">فرزندان<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="گروهی" data-search="شهر گپ گروهی تعامل مرتبط با اعضای همان گپ و ثبت اعضای گپ در دیتابیس. شهر شهرگپ شهر گپ">
+      <div class="card-top"><div class="icon cyan">🏙️</div><span class="badge">گروهی</span></div>
+      <h3>شهر گپ</h3>
+      <p>تعامل مرتبط با اعضای همان گپ و ثبت اعضای گپ در دیتابیس.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="شهر">شهر<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="شهرگپ">شهرگپ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="شهر گپ">شهر گپ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="مدیریت" data-search="مسدودسازی مدیریت مسدود یا آزاد کردن کاربر از ربات؛ سیستم BanMiddleware نیز کاربران مسدود را بررسی می‌کند. مسدود آزاد">
+      <div class="card-top"><div class="icon red">🚫</div><span class="badge">مدیریت</span></div>
+      <h3>مسدودسازی</h3>
+      <p>مسدود یا آزاد کردن کاربر از ربات؛ سیستم BanMiddleware نیز کاربران مسدود را بررسی می‌کند.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="مسدود">مسدود<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="آزاد">آزاد<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="انفجار / Mines بازی بازی شرطی انفجار با حالت‌ها، انتخاب خانه، ضریب و امکان Cashout. انفجار مبلغ">
+      <div class="card-top"><div class="icon pink">💣</div><span class="badge">بازی</span></div>
+      <h3>انفجار / Mines</h3>
+      <p>بازی شرطی انفجار با حالت‌ها، انتخاب خانه، ضریب و امکان Cashout.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="انفجار مبلغ">انفجار مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="XO بازی بازی دو نفره XO با شرط و نوبت‌بندی. ایکس او مبلغ xo مبلغ">
+      <div class="card-top"><div class="icon pink">❌</div><span class="badge">بازی</span></div>
+      <h3>XO</h3>
+      <p>بازی دو نفره XO با شرط و نوبت‌بندی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ایکس او مبلغ">ایکس او مبلغ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="xo مبلغ">xo مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="سنگ کاغذ قیچی بازی بازی دو نفره سنگ‌کاغذقیچی با شرط. سنگ کاغذ قیچی rps">
+      <div class="card-top"><div class="icon pink">✋</div><span class="badge">بازی</span></div>
+      <h3>سنگ کاغذ قیچی</h3>
+      <p>بازی دو نفره سنگ‌کاغذقیچی با شرط.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="سنگ">سنگ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کاغذ">کاغذ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="قیچی">قیچی<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="rps">rps<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="تاس و بازی‌های متنی بازی تاس شرطی و اسلات؛ همچنین مسابقه و بازی‌های متنی در بخش‌های دیگر. تاس زوج مبلغ تاس فرد مبلغ اسلات مبلغ">
+      <div class="card-top"><div class="icon pink">🎲</div><span class="badge">بازی</span></div>
+      <h3>تاس و بازی‌های متنی</h3>
+      <p>تاس شرطی و اسلات؛ همچنین مسابقه و بازی‌های متنی در بخش‌های دیگر.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="تاس زوج مبلغ">تاس زوج مبلغ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="تاس فرد مبلغ">تاس فرد مبلغ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="اسلات مبلغ">اسلات مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="کارگرها اقتصاد خرید کارگر، مشاهده جزئیات، درآمد و برداشت درآمد کارگر. کارگرها لیست کارگران">
+      <div class="card-top"><div class="icon green">👷</div><span class="badge">اقتصاد</span></div>
+      <h3>کارگرها</h3>
+      <p>خرید کارگر، مشاهده جزئیات، درآمد و برداشت درآمد کارگر.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="کارگرها">کارگرها<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="لیست کارگران">لیست کارگران<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="کسب درآمد اقتصاد سیستم کسب درآمد از شغل‌ها و برداشت درآمد جمع‌شده. منوی کسب درآمد">
+      <div class="card-top"><div class="icon green">🏠</div><span class="badge">اقتصاد</span></div>
+      <h3>کسب درآمد</h3>
+      <p>سیستم کسب درآمد از شغل‌ها و برداشت درآمد جمع‌شده.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="منوی کسب درآمد">منوی کسب درآمد<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="صرافی اقتصاد خرید و فروش ارزهای تعریف‌شده با قیمت‌های متغیر. خرید مقدار ارز فروش مقدار ارز">
+      <div class="card-top"><div class="icon green">💱</div><span class="badge">اقتصاد</span></div>
+      <h3>صرافی</h3>
+      <p>خرید و فروش ارزهای تعریف‌شده با قیمت‌های متغیر.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="خرید مقدار ارز">خرید مقدار ارز<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="فروش مقدار ارز">فروش مقدار ارز<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="ولت ارز اقتصاد مشاهده دارایی‌های ارزی و جزئیات ارزها. ولت کیف پول wallet">
+      <div class="card-top"><div class="icon green">📦</div><span class="badge">اقتصاد</span></div>
+      <h3>ولت ارز</h3>
+      <p>مشاهده دارایی‌های ارزی و جزئیات ارزها.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ولت">ولت<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کیف پول">کیف پول<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="wallet">wallet<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="بازار سیاه اقتصاد فروش آیتم‌های بازار سیاه؛ برخی آیتم‌ها می‌توانند روی شانس برد دعوا اثر بگذارند. بازار سیاه">
+      <div class="card-top"><div class="icon green">🕶️</div><span class="badge">اقتصاد</span></div>
+      <h3>بازار سیاه</h3>
+      <p>فروش آیتم‌های بازار سیاه؛ برخی آیتم‌ها می‌توانند روی شانس برد دعوا اثر بگذارند.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="بازار سیاه">بازار سیاه<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="انبار اقتصاد مشاهده آیتم‌های خریداری‌شده و فروش بعضی آیتم‌ها. انبار">
+      <div class="card-top"><div class="icon green">📦</div><span class="badge">اقتصاد</span></div>
+      <h3>انبار</h3>
+      <p>مشاهده آیتم‌های خریداری‌شده و فروش بعضی آیتم‌ها.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="انبار">انبار<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="بانک اقتصاد واریز و برداشت پول، سود بانکی و پس‌انداز قفل‌شده. سپرده مبلغ برداشت مبلغ برداشت کل سپرده">
+      <div class="card-top"><div class="icon green">🏦</div><span class="badge">اقتصاد</span></div>
+      <h3>بانک</h3>
+      <p>واریز و برداشت پول، سود بانکی و پس‌انداز قفل‌شده.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="سپرده مبلغ">سپرده مبلغ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="برداشت مبلغ">برداشت مبلغ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="برداشت کل سپرده">برداشت کل سپرده<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="پس‌انداز قفل اقتصاد برنامه‌های قفل پول، مشاهده پیشرفت، برداشت در موعد و مسیر برداشت زودتر. پس‌انداز قفل‌شده">
+      <div class="card-top"><div class="icon green">🔒</div><span class="badge">اقتصاد</span></div>
+      <h3>پس‌انداز قفل</h3>
+      <p>برنامه‌های قفل پول، مشاهده پیشرفت، برداشت در موعد و مسیر برداشت زودتر.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="پس‌انداز قفل‌شده">پس‌انداز قفل‌شده<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="ترید اقتصاد ترید شانسی با مبالغ مشخص و چند ضریب نتیجه. ترید مبلغ">
+      <div class="card-top"><div class="icon green">📈</div><span class="badge">اقتصاد</span></div>
+      <h3>ترید</h3>
+      <p>ترید شانسی با مبالغ مشخص و چند ضریب نتیجه.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ترید مبلغ">ترید مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="ولت اقتصاد نمایش اطلاعات کیف پول/دارایی کاربر. ولت کیف پول">
+      <div class="card-top"><div class="icon green">💼</div><span class="badge">اقتصاد</span></div>
+      <h3>ولت</h3>
+      <p>نمایش اطلاعات کیف پول/دارایی کاربر.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ولت">ولت<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کیف پول">کیف پول<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="ماشین و مسابقه بازی خرید ماشین و مسابقه؛ قدرت ماشین در شانس برد اثر دارد. مسابقه مبلغ">
+      <div class="card-top"><div class="icon pink">🏁</div><span class="badge">بازی</span></div>
+      <h3>ماشین و مسابقه</h3>
+      <p>خرید ماشین و مسابقه؛ قدرت ماشین در شانس برد اثر دارد.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="مسابقه مبلغ">مسابقه مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="گردونه بازی سیستم گردونه با ثبت تصویر، تأیید ادمین و پرداخت/تأیید. ثبت گردونه گردونه">
+      <div class="card-top"><div class="icon pink">🎡</div><span class="badge">بازی</span></div>
+      <h3>گردونه</h3>
+      <p>سیستم گردونه با ثبت تصویر، تأیید ادمین و پرداخت/تأیید.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ثبت گردونه">ثبت گردونه<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="گردونه">گردونه<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="انتقال پول اقتصاد انتقال مبلغ با ریپلای به کاربر و کنترل قفل انتقال. انتقال مبلغ">
+      <div class="card-top"><div class="icon green">🔁</div><span class="badge">اقتصاد</span></div>
+      <h3>انتقال پول</h3>
+      <p>انتقال مبلغ با ریپلای به کاربر و کنترل قفل انتقال.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="انتقال مبلغ">انتقال مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="سهام شرکت اقتصاد خرید درصد سهام، فروش و دریافت حقوق دوره‌ای سهام. سهام شرکت حقوق حقوق سهام">
+      <div class="card-top"><div class="icon green">🏢</div><span class="badge">اقتصاد</span></div>
+      <h3>سهام شرکت</h3>
+      <p>خرید درصد سهام، فروش و دریافت حقوق دوره‌ای سهام.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="سهام شرکت">سهام شرکت<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="حقوق">حقوق<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="حقوق سهام">حقوق سهام<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اجتماعی" data-search="کد دعوت اجتماعی سیستم Referral و پاداش دعوت؛ لینک دعوت نیز در /start پردازش می‌شود. دعوت کد">
+      <div class="card-top"><div class="icon purple">🎟️</div><span class="badge">اجتماعی</span></div>
+      <h3>کد دعوت</h3>
+      <p>سیستم Referral و پاداش دعوت؛ لینک دعوت نیز در /start پردازش می‌شود.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="دعوت کد">دعوت کد<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="دزدی و ریسک بازی چند سیستم سرقت با احتمال موفقیت/شکست، جریمه و کول‌داون. دزدی دزدی از سوپرمارکت دزدی بانک">
+      <div class="card-top"><div class="icon pink">🛒</div><span class="badge">بازی</span></div>
+      <h3>دزدی و ریسک</h3>
+      <p>چند سیستم سرقت با احتمال موفقیت/شکست، جریمه و کول‌داون.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="دزدی">دزدی<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="دزدی از سوپرمارکت">دزدی از سوپرمارکت<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="دزدی بانک">دزدی بانک<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="بیمه اقتصاد خرید پلن بیمه با درصد بازگشت، قیمت و مدت. بیمه">
+      <div class="card-top"><div class="icon green">🛡️</div><span class="badge">اقتصاد</span></div>
+      <h3>بیمه</h3>
+      <p>خرید پلن بیمه با درصد بازگشت، قیمت و مدت.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="بیمه">بیمه<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="پیشرفت" data-search="مأموریت روزانه پیشرفت مأموریت‌های روزانه با پیشرفت و Claim پاداش. مأموریت">
+      <div class="card-top"><div class="icon orange">📜</div><span class="badge">پیشرفت</span></div>
+      <h3>مأموریت روزانه</h3>
+      <p>مأموریت‌های روزانه با پیشرفت و Claim پاداش.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="مأموریت">مأموریت<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="بازی" data-search="دعوا دو نفره بازی ایجاد مبارزه دو نفره با شرط؛ برنده بر اساس سطح و آیتم‌های مرتبط تعیین می‌شود. دعوا مبلغ">
+      <div class="card-top"><div class="icon pink">⚔️</div><span class="badge">بازی</span></div>
+      <h3>دعوا دو نفره</h3>
+      <p>ایجاد مبارزه دو نفره با شرط؛ برنده بر اساس سطح و آیتم‌های مرتبط تعیین می‌شود.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="دعوا مبلغ">دعوا مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="ماینر ارز اقتصاد استخدام ماینر، شروع/توقف استخراج، جمع‌آوری درآمد و حقوق. ماینر">
+      <div class="card-top"><div class="icon green">⛏️</div><span class="badge">اقتصاد</span></div>
+      <h3>ماینر ارز</h3>
+      <p>استخدام ماینر، شروع/توقف استخراج، جمع‌آوری درآمد و حقوق.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ماینر">ماینر<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="اقتصاد" data-search="وام اقتصاد تعریف و دریافت وام، پرداخت قسط، پرداخت سریع و مدیریت سررسید. وام">
+      <div class="card-top"><div class="icon green">💳</div><span class="badge">اقتصاد</span></div>
+      <h3>وام</h3>
+      <p>تعریف و دریافت وام، پرداخت قسط، پرداخت سریع و مدیریت سررسید.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="وام">وام<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="فروشگاه" data-search="فروشگاه گیفت استارز فروشگاه خرید گیفت با پول بازی و ارسال گیفت؛ مدیریت قیمت و موجودی توسط ادمین. فروشگاه گیفت">
+      <div class="card-top"><div class="icon gold">⭐</div><span class="badge">فروشگاه</span></div>
+      <h3>فروشگاه گیفت استارز</h3>
+      <p>خرید گیفت با پول بازی و ارسال گیفت؛ مدیریت قیمت و موجودی توسط ادمین.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="فروشگاه گیفت">فروشگاه گیفت<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="بکاپ و بازیابی ادمین گرفتن بکاپ دیتابیس و بازیابی از فایل با فرآیند مدیریتی. بکاپ backup دریافت دیتابیس">
+      <div class="card-top"><div class="icon red">💾</div><span class="badge">ادمین</span></div>
+      <h3>بکاپ و بازیابی</h3>
+      <p>گرفتن بکاپ دیتابیس و بازیابی از فایل با فرآیند مدیریتی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="بکاپ">بکاپ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="backup">backup<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="دریافت دیتابیس">دریافت دیتابیس<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="پنل ادمین ادمین مرکز مدیریت ارز، شغل، کارگر، بازار سیاه، ماشین، شرکت، لول، هدیه، آمار و تنظیمات. ادمین پنل ادمین پنل /admin">
+      <div class="card-top"><div class="icon red">🛠️</div><span class="badge">ادمین</span></div>
+      <h3>پنل ادمین</h3>
+      <p>مرکز مدیریت ارز، شغل، کارگر، بازار سیاه، ماشین، شرکت، لول، هدیه، آمار و تنظیمات.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ادمین">ادمین<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="پنل ادمین">پنل ادمین<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="پنل">پنل<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="/admin">/admin<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="تنظیمات ادمین تنظیمات توکن بازیابی، فرمت نمایش پول، قفل انتقال و برخی گزینه‌های سیستمی. ستینگ setting تنظیمات /setting">
+      <div class="card-top"><div class="icon red">⚙️</div><span class="badge">ادمین</span></div>
+      <h3>تنظیمات</h3>
+      <p>تنظیمات توکن بازیابی، فرمت نمایش پول، قفل انتقال و برخی گزینه‌های سیستمی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ستینگ">ستینگ<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="setting">setting<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="تنظیمات">تنظیمات<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="/setting">/setting<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="پیام همگانی ادمین ارسال Broadcast متنی یا تصویری به کاربران. پیام همگانی">
+      <div class="card-top"><div class="icon red">📢</div><span class="badge">ادمین</span></div>
+      <h3>پیام همگانی</h3>
+      <p>ارسال Broadcast متنی یا تصویری به کاربران.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="پیام همگانی">پیام همگانی<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت ادمین ادمین افزودن و حذف ادمین‌ها و کنترل دسترسی. افزودن ادمین حذف ادمین">
+      <div class="card-top"><div class="icon red">👑</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت ادمین</h3>
+      <p>افزودن و حذف ادمین‌ها و کنترل دسترسی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="افزودن ادمین">افزودن ادمین<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="حذف ادمین">حذف ادمین<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت موجودی ادمین واریز یا کسر پول از کاربر؛ در کسر گسترده، دارایی‌های مختلف نیز بررسی می‌شوند. واریز کسر کسرهمه">
+      <div class="card-top"><div class="icon red">💰</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت موجودی</h3>
+      <p>واریز یا کسر پول از کاربر؛ در کسر گسترده، دارایی‌های مختلف نیز بررسی می‌شوند.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="واریز">واریز<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کسر">کسر<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کسرهمه">کسرهمه<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="هدیه و کد هدیه ادمین ساخت و مدیریت کدهای هدیه و محدودیت استفاده. کدهدیه کد">
+      <div class="card-top"><div class="icon red">🎁</div><span class="badge">ادمین</span></div>
+      <h3>هدیه و کد هدیه</h3>
+      <p>ساخت و مدیریت کدهای هدیه و محدودیت استفاده.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="کدهدیه">کدهدیه<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کد">کد<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت ماشین ادمین افزودن/مدیریت ماشین با قیمت و قدرت. ماشین ... افزودنماشین">
+      <div class="card-top"><div class="icon red">🚗</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت ماشین</h3>
+      <p>افزودن/مدیریت ماشین با قیمت و قدرت.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ماشین ...">ماشین ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="افزودنماشین">افزودنماشین<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت بازار سیاه ادمین افزودن گروهی آیتم‌های بازار سیاه و درصد برد اختیاری. سیاه ... افزودن‌سیاه">
+      <div class="card-top"><div class="icon red">🕶️</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت بازار سیاه</h3>
+      <p>افزودن گروهی آیتم‌های بازار سیاه و درصد برد اختیاری.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="سیاه ...">سیاه ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="افزودن‌سیاه">افزودن‌سیاه<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت ارز ادمین تعریف ارز، محدوده قیمت، کاهش/جهش و کنترل قیمت. ارز ... کاهش جهش ریست قیمت">
+      <div class="card-top"><div class="icon red">💱</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت ارز</h3>
+      <p>تعریف ارز، محدوده قیمت، کاهش/جهش و کنترل قیمت.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ارز ...">ارز ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="کاهش">کاهش<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="جهش">جهش<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="ریست قیمت">ریست قیمت<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت شغل ادمین تعریف شغل با نوع، نام، ایموجی، قیمت و درآمد ساعتی. شغل ...">
+      <div class="card-top"><div class="icon red">🏪</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت شغل</h3>
+      <p>تعریف شغل با نوع، نام، ایموجی، قیمت و درآمد ساعتی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="شغل ...">شغل ...<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت کارگر ادمین تعریف کارگر با قیمت، درآمد ساعتی و سقف تعداد. کارگر ...">
+      <div class="card-top"><div class="icon red">👷</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت کارگر</h3>
+      <p>تعریف کارگر با قیمت، درآمد ساعتی و سقف تعداد.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="کارگر ...">کارگر ...<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت سود بانک ادمین تنظیم سود بانک و اعمال پرداخت سود. سودبانک پرداخت سود">
+      <div class="card-top"><div class="icon red">🏦</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت سود بانک</h3>
+      <p>تنظیم سود بانک و اعمال پرداخت سود.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="سودبانک">سودبانک<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="پرداخت سود">پرداخت سود<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="هدیه همگانی ادمین تعیین مبلغ عمومی برای کاربران. همگانی مبلغ">
+      <div class="card-top"><div class="icon red">🌍</div><span class="badge">ادمین</span></div>
+      <h3>هدیه همگانی</h3>
+      <p>تعیین مبلغ عمومی برای کاربران.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="همگانی مبلغ">همگانی مبلغ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="آمار ربات ادمین نمایش تعداد کاربران، کل پول، تعداد ارزها، شغل‌ها و کارگرها. آمار">
+      <div class="card-top"><div class="icon red">📊</div><span class="badge">ادمین</span></div>
+      <h3>آمار ربات</h3>
+      <p>نمایش تعداد کاربران، کل پول، تعداد ارزها، شغل‌ها و کارگرها.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="آمار">آمار<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="ریست کانفیگ ادمین پاک‌سازی کانفیگ‌های ارز، شغل، کارگر، ماشین و بازار سیاه بدون حذف داده کاربران. ریست کانفیگ">
+      <div class="card-top"><div class="icon red">🧹</div><span class="badge">ادمین</span></div>
+      <h3>ریست کانفیگ</h3>
+      <p>پاک‌سازی کانفیگ‌های ارز، شغل، کارگر، ماشین و بازار سیاه بدون حذف داده کاربران.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="ریست کانفیگ">ریست کانفیگ<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت شرکت ادمین ساخت و حذف شرکت و تنظیم ارزش، درصد قابل عرضه، قیمت و حقوق. شرکت ... حذف‌شرکت">
+      <div class="card-top"><div class="icon red">🏢</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت شرکت</h3>
+      <p>ساخت و حذف شرکت و تنظیم ارزش، درصد قابل عرضه، قیمت و حقوق.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="شرکت ...">شرکت ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="حذف‌شرکت">حذف‌شرکت<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت وام ادمین تعریف و حذف پلن‌های وام. وام ... حذف‌وام">
+      <div class="card-top"><div class="icon red">💳</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت وام</h3>
+      <p>تعریف و حذف پلن‌های وام.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="وام ...">وام ...<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="حذف‌وام">حذف‌وام<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت عنوان لول ادمین تعریف بازه‌های سطح و عنوان نمایشی. عنوان لول">
+      <div class="card-top"><div class="icon red">🏷️</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت عنوان لول</h3>
+      <p>تعریف بازه‌های سطح و عنوان نمایشی.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="عنوان لول">عنوان لول<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="وضعیت ارز ادمین مشاهده وضعیت ارزها و حذف ارز. وضعیت ارز">
+      <div class="card-top"><div class="icon red">📉</div><span class="badge">ادمین</span></div>
+      <h3>وضعیت ارز</h3>
+      <p>مشاهده وضعیت ارزها و حذف ارز.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="وضعیت ارز">وضعیت ارز<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="مدیریت گروه ادمین تنظیم گروه مرتبط با اعلان‌ها. گروه ID /setgroup">
+      <div class="card-top"><div class="icon red">👥</div><span class="badge">ادمین</span></div>
+      <h3>مدیریت گروه</h3>
+      <p>تنظیم گروه مرتبط با اعلان‌ها.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="گروه ID">گروه ID<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="/setgroup">/setgroup<span>⧉</span></button></div>
+    </article>
+    <article class="feature-card" data-cat="ادمین" data-search="کانال گیفت ادمین تنظیم کانال مرتبط با گیفت. کانال‌هدیه /setgiftchannel">
+      <div class="card-top"><div class="icon red">🎁</div><span class="badge">ادمین</span></div>
+      <h3>کانال گیفت</h3>
+      <p>تنظیم کانال مرتبط با گیفت.</p>
+      <div class="commands"><button class="cmd" onclick="copyCmd(this)" data-cmd="کانال‌هدیه">کانال‌هدیه<span>⧉</span></button><button class="cmd" onclick="copyCmd(this)" data-cmd="/setgiftchannel">/setgiftchannel<span>⧉</span></button></div>
+    </article></div>
+  <div id="empty" class="empty">🔎 چیزی پیدا نشد.<br>نام بخش، دسته یا دستور دیگری را امتحان کن.</div>
+</main>
+
+<footer>
+  ساخته‌شده به‌عنوان مستندات GitHub برای <b>Ocean Game Bot</b> • محتوای این صفحه از ساختار و قابلیت‌های فایل bot.py استخراج شده است.<br>
+  برای کپی دستور، روی هر برچسب دستور کلیک کن.
+</footer>
+
+<div id="toast" class="toast">کپی شد ✓</div>
+<script>
+const cards=[...document.querySelectorAll('.feature-card')];
+const filters=[...document.querySelectorAll('.filter')];
+const search=document.getElementById('search');
+const count=document.getElementById('count');
+const empty=document.getElementById('empty');
+let active='همه';
+
+function apply(){
+  const q=search.value.trim().toLowerCase();
+  let shown=0;
+  cards.forEach(c=>{
+    const okCat=active==='همه'||c.dataset.cat===active;
+    const okQ=!q||c.dataset.search.toLowerCase().includes(q);
+    c.style.display=okCat&&okQ?'block':'none';
+    if(okCat&&okQ) shown++;
+  });
+  count.textContent=shown;
+  empty.style.display=shown?'none':'block';
+}
+filters.forEach(b=>b.addEventListener('click',()=>{
+  filters.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  active=b.dataset.filter;
+  apply();
+}));
+filters[0].classList.add('active');
+search.addEventListener('input',apply);
+
+function copyCmd(btn){
+  const cmd=btn.dataset.cmd;
+  navigator.clipboard?.writeText(cmd).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=cmd;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+  });
+  const t=document.getElementById('toast');t.textContent='دستور کپی شد: '+cmd;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1500);
+}
+function tick(){
+  const d=new Date();document.getElementById('liveTime').textContent=d.toLocaleTimeString('fa-IR',{hour12:false});
+}
+setInterval(tick,1000);tick();
+</script>
+</body>
+</html>
